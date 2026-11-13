@@ -1,0 +1,20 @@
+{
+  "name": "confia360-motor",
+  "version": "0.1.0",
+  "description": "Motor común de ConfIA360. Expediente, etapas, alarmas, citas, mando y cuenta. Sin clínica y sin envíos.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "exports": {
+    "./expediente": "./expediente.ts",
+    "./admin": "./admin.ts",
+    "./mando": "./mando.ts",
+    "./cuenta": "./cuenta.ts"
+  },
+  "files": [
+    "expediente.ts",
+    "admin.ts",
+    "mando.ts",
+    "cuenta.ts",
+    "README.md"
+  ]
+}
