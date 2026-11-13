@@ -1,6 +1,6 @@
 {
   "name": "confia360-motor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Motor común de ConfIA360. Expediente, etapas, alarmas, citas, mando y cuenta. Sin clínica y sin envíos.",
   "type": "module",
   "license": "UNLICENSED",

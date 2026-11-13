@@ -8,9 +8,7 @@ export const DEFAULT_STAGES = [
   { id: "perdido", label: "Perdido" },
 ] as const;
 
-export type StageId = (typeof DEFAULT_STAGES)[number]["id"];
-
-export type StageConf = { id: StageId; label: string };
+export type StageConf = { id: string; label: string };
 
 export type MotorAdmin = {
   stages: StageConf[];
@@ -26,6 +24,7 @@ function defaults(): MotorAdmin {
 export function loadAdmin(): MotorAdmin {
   const base = defaults();
   try {
+    if (typeof localStorage === "undefined") return base;
     const raw = localStorage.getItem(KEY);
     if (!raw) return base;
     const data = JSON.parse(raw) as Partial<MotorAdmin>;
@@ -35,7 +34,14 @@ export function loadAdmin(): MotorAdmin {
       const label = found?.label?.trim().slice(0, 40);
       return { id: stage.id, label: label || stage.label };
     });
-    const order = saved.map((item) => item?.id).filter((id): id is StageId => base.stages.some((stage) => stage.id === id));
+    const seen = new Set<string>();
+    const order: string[] = [];
+    for (const item of saved) {
+      const id = item?.id;
+      if (!id || seen.has(id) || !base.stages.some((stage) => stage.id === id)) continue;
+      seen.add(id);
+      order.push(id);
+    }
     const ordered = [
       ...order.map((id) => stages.find((stage) => stage.id === id)!),
       ...stages.filter((stage) => !order.includes(stage.id)),
